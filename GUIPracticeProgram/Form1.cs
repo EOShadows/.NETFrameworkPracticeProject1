@@ -13,6 +13,7 @@ namespace GUIPracticeProgram
     public partial class Form1 : Form
     {
         List<NPC> charactersOnScreen;
+
         Character player;
         const Character.MoveDirection UP = Character.MoveDirection.UP;
         const Character.MoveDirection DOWN = Character.MoveDirection.DOWN;
@@ -36,6 +37,7 @@ namespace GUIPracticeProgram
             charactersOnScreen = new List<NPC>();
             player = new Character(playerPicture, "player", 10);
         }
+
 
         private void MyUpdate()
         {
@@ -83,13 +85,19 @@ namespace GUIPracticeProgram
 
     public class Entity
     {
+        public static List<Entity> entity;
+
         public string name { get; set; }
         public Control self { get; set; }
 
         public Entity(Control self, string name)
         {
+            entity = new List<Entity>();
+
             this.self = self;
             this.name = name;
+
+            entity.Add(this);
         }
 
         public bool Intersects(Point point)
