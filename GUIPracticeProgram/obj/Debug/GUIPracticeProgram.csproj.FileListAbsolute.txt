@@ -7,4 +7,4 @@ C:\Users\awost\source\repos\GUIProgramPractice\GUIPracticeProgram\obj\Debug\GUIP
 C:\Users\awost\source\repos\GUIProgramPractice\GUIPracticeProgram\obj\Debug\GUIPracticeProgram.csproj.CoreCompileInputs.cache
 C:\Users\awost\source\repos\GUIProgramPractice\GUIPracticeProgram\obj\Debug\GUIPracticeProgram.exe
 C:\Users\awost\source\repos\GUIProgramPractice\GUIPracticeProgram\obj\Debug\GUIPracticeProgram.pdb
-C:\Users\awost\source\repos\GUIProgramPractice\GUIPracticeProgram\obj\Debug\GUIPracticeProgram.ExtensionMethods.resources
+C:\Users\awost\source\repos\GUIProgramPractice\GUIPracticeProgram\obj\Debug\GUIPracticeProgram.Form1.resources

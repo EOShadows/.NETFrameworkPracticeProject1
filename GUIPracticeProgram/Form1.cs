@@ -10,69 +10,6 @@ using System.Windows.Forms;
 
 namespace GUIPracticeProgram
 {
-    public static class ExtensionMethods
-    {
-        public static void Add(this Point point, Point otherPoint)
-        {
-            point.X += otherPoint.X;
-            point.Y += otherPoint.Y;
-        }
-    }
-
-    public class Character
-    {
-        public int speed { get; set; }
-        public string name { get; set; }
-        public Control self { get; set; }
-
-        public enum MoveDirection
-        {
-            UP = 0,
-            DOWN = 1,
-            RIGHT = 2,
-            LEFT = 3
-        }
-
-        public Character(Control self, string name, int speed)
-        {
-            this.self = self;
-            this.speed = speed;
-            this.name = name;
-        }
-
-        public void Move(MoveDirection direction)
-        {
-            Point movement = new Point(0,0);
-
-            switch (direction)
-            {
-                case MoveDirection.UP:
-                    movement = new Point(0, speed);
-                    break;
-                case MoveDirection.DOWN:
-                    movement = new Point(0, -speed);
-                    break;
-                case MoveDirection.RIGHT:
-                    movement = new Point(speed, 0);
-                    break;
-                case MoveDirection.LEFT:
-                    movement = new Point(-speed, 0);
-                    break;
-            }
-
-            self.Location.Add(movement);
-        }
-    }
-
-    public class NPC : Character
-    {
-        private MoveDirection moveDirection;
-
-        public NPC(Control self, string name, int speed) : base(self, name, speed) { }
-
-        public void Move() { Move(moveDirection); }
-    }
-
     public partial class Form1 : Form
     {
         List<NPC> charactersOnScreen;
@@ -97,7 +34,7 @@ namespace GUIPracticeProgram
         private void InitializeCharacters()
         {
             charactersOnScreen = new List<NPC>();
-            player = new Character(button1, "player", 10);
+            player = new Character(playerPicture, "player", 10);
         }
 
         private void MyUpdate()
@@ -115,43 +52,109 @@ namespace GUIPracticeProgram
             {
                 npc.Move();
             }
-
-            CheckInput();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void CheckInput(object sender, KeyEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("Key down: " + e.KeyCode.ToString());
+
+            if (e.KeyCode == Keys.W)        { player.Move(UP); }
+            else if (e.KeyCode == Keys.S)   { player.Move(DOWN); }
+            else if (e.KeyCode == Keys.D)   { player.Move(RIGHT); }
+            else if (e.KeyCode == Keys.A)   { player.Move(LEFT); }
+        }
+
+        private void playerPicture_Click(object sender, EventArgs e)
         {
 
         }
+    }
 
-
-        private void CheckInput()
+    public static class ExtensionMethods
+    {
+        public static Point Plus(this Point point, Point otherPoint)
         {
-            
+            int x = point.X + otherPoint.X;
+            int y = point.Y + otherPoint.Y;
+
+            return new Point(x, y);
+        }
+    }
+
+    public class Entity
+    {
+        public string name { get; set; }
+        public Control self { get; set; }
+
+        public Entity(Control self, string name)
+        {
+            this.self = self;
+            this.name = name;
         }
 
-        protected override void OnKeyDown(KeyEventArgs e)
+        public bool Intersects(Point point)
         {
-            System.Diagnostics.Debug.WriteLine("Key press:" + e.KeyCode.ToString());
+            bool condition1 = point.X >= self.Left && point.X <= self.Right;
+            bool condition2 = point.Y <= self.Bottom && point.Y >= self.Top;
 
-            switch (e.KeyCode)
+            return (condition1 && condition2);
+        }
+    }
+
+    public class Character : Entity
+    {
+        public int speed { get; set; }
+
+        public enum MoveDirection
+        {
+            UP = 0,
+            DOWN = 1,
+            RIGHT = 2,
+            LEFT = 3
+        }
+
+        public Character(Control self, string name, int speed) : base (self, name)
+        {
+            this.self = self;
+            this.speed = speed;
+            this.name = name;
+        }
+
+        public void Move(MoveDirection direction)
+        {
+            Point movement = new Point(0, 0);
+
+            switch (direction)
             {
-                case Keys.W:
-                    player.Move(UP);
+                case MoveDirection.UP:
+                    movement = new Point(0, -speed);
                     break;
-
-                case Keys.S:
-                    player.Move(DOWN);
+                case MoveDirection.DOWN:
+                    movement = new Point(0, speed);
                     break;
-
-                case Keys.D:
-                    player.Move(RIGHT);
+                case MoveDirection.RIGHT:
+                    movement = new Point(speed, 0);
                     break;
-
-                case Keys.A:
-                    player.Move(LEFT);
+                case MoveDirection.LEFT:
+                    movement = new Point(-speed, 0);
                     break;
             }
+
+            self.Location = self.Location.Plus(movement);
         }
+    }
+
+    public class NPC : Character
+    {
+        private MoveDirection moveDirection;
+
+        public NPC(Control self, string name, int speed) : base(self, name, speed) { }
+
+        public void Move() { Move(moveDirection); }
+    }
+
+    public class Obstacle : Entity
+    {
+        public Obstacle(Control self, string name) : base (self, name) { }
     }
 }
