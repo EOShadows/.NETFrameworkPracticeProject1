@@ -1,0 +1,10 @@
+C:\Users\awost\source\repos\GUIProgramPractice\GUIPracticeProgram\bin\Debug\GUIPracticeProgram.exe.config
+C:\Users\awost\source\repos\GUIProgramPractice\GUIPracticeProgram\bin\Debug\GUIPracticeProgram.exe
+C:\Users\awost\source\repos\GUIProgramPractice\GUIPracticeProgram\bin\Debug\GUIPracticeProgram.pdb
+C:\Users\awost\source\repos\GUIProgramPractice\GUIPracticeProgram\obj\Debug\GUIPracticeProgram.csproj.AssemblyReference.cache
+C:\Users\awost\source\repos\GUIProgramPractice\GUIPracticeProgram\obj\Debug\GUIPracticeProgram.Properties.Resources.resources
+C:\Users\awost\source\repos\GUIProgramPractice\GUIPracticeProgram\obj\Debug\GUIPracticeProgram.csproj.GenerateResource.cache
+C:\Users\awost\source\repos\GUIProgramPractice\GUIPracticeProgram\obj\Debug\GUIPracticeProgram.csproj.CoreCompileInputs.cache
+C:\Users\awost\source\repos\GUIProgramPractice\GUIPracticeProgram\obj\Debug\GUIPracticeProgram.exe
+C:\Users\awost\source\repos\GUIProgramPractice\GUIPracticeProgram\obj\Debug\GUIPracticeProgram.pdb
+C:\Users\awost\source\repos\GUIProgramPractice\GUIPracticeProgram\obj\Debug\GUIPracticeProgram.ExtensionMethods.resources
