@@ -54,6 +54,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="GameGraphics.cs" />
     <Compile Include="GlobalSettings.cs" />
     <Compile Include="NonObstacle.cs" />
     <Compile Include="NPC.cs" />

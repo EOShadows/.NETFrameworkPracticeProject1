@@ -22,9 +22,10 @@ namespace GUIPracticeProgram
         Character player;
         /* ------------------------------ */
 
-        /* Viewport information --------- */
-        Image viewportImage;
-        Graphics graphics;
+        /* Graphics handler ------------- */
+        // suppressed as the object is necessary even if its value is never accessed.
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality","IDE0052")]
+        GameGraphics graphics;
         /* ------------------------------ */
 
         /* Game loop ---------------- */
@@ -47,9 +48,7 @@ namespace GUIPracticeProgram
 
         private void InitializeGraphics()
         {
-            viewportImage = new Bitmap(viewport.Width, viewport.Height);
-            graphics = Graphics.FromImage(viewportImage);
-            viewport.Paint += new PaintEventHandler(UpdatePaint);
+            graphics = new GameGraphics(viewport);
         }
 
         private void InitializeCharacters()
@@ -97,28 +96,6 @@ namespace GUIPracticeProgram
         private void Draw()
         {
             viewport.Invalidate();
-        }
-
-        private void UpdatePaint(object sender, PaintEventArgs e)
-        {
-            PrepareViewport();
-            DrawViewport(e.Graphics);
-        }
-
-        private void PrepareViewport()
-        {
-            Entity.all.Sort();
-
-            foreach (Entity entity in Entity.all)
-            {
-                entity.DrawSprite(graphics);
-            }
-        }
-
-        private void DrawViewport(Graphics g)
-        {
-            g.Clear(Color.Black);
-            g.DrawImage(viewportImage, new Point(0, 0));
         }
 
         private void CheckInput(object sender, KeyEventArgs e)
