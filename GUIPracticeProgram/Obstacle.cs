@@ -15,6 +15,6 @@ namespace GUIPracticeProgram
     /// </summary>
     public class Obstacle : Entity
     {
-        public Obstacle(Sprite self, string name) : base(self, name) { }
+        public Obstacle(Sprite self, string name, int layer = 0) : base(self, name, layer) { }
     }
 }

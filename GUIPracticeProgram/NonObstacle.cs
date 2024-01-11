@@ -10,7 +10,7 @@ namespace GUIPracticeProgram
     {
         public NonObstacle(Sprite self, string name) : base(self, name)
         {
-            rect = null;
+            layer = -1;
         }
     }
 }

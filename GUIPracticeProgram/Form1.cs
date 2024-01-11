@@ -12,27 +12,44 @@ namespace GUIPracticeProgram
 {
     public partial class Form1 : Form
     {
+        /* Sprites ---------------------- */
+        Content sprites;
+        /* ------------------------------ */
+
+        /* Game objectes ---------------- */
         List<NPC> charactersOnScreen;
         List<Obstacle> obstaclesOnScreen;
-        Image screen;
-        Graphics graphics;
-
         Character player;
+        /* ------------------------------ */
+
+        /* Viewport information --------- */
+        Image viewportImage;
+        Graphics graphics;
+        /* ------------------------------ */
+
+        /* Game loop ---------------- */
+        Timer gameTimer;
+        /* ------------------------------ */
 
         public Form1()
         {
             InitializeComponent();
+            InitializeSprites();
+            InitializeGraphics();
             InitializeCharacters();
+            StartGameLoop();
+        }
 
-            screen = new Bitmap(panel1.Width, panel1.Height);
-            graphics = Graphics.FromImage(screen);
+        private void InitializeSprites()
+        {
+            sprites = new Content(viewport);
+        }
 
-            panel1.Paint += new PaintEventHandler(UpdatePaint);
-
-            Timer myTimer = new Timer();
-            myTimer.Interval = 20;
-            myTimer.Start();
-            myTimer.Tick += reactToTimer;
+        private void InitializeGraphics()
+        {
+            viewportImage = new Bitmap(viewport.Width, viewport.Height);
+            graphics = Graphics.FromImage(viewportImage);
+            viewport.Paint += new PaintEventHandler(UpdatePaint);
         }
 
         private void InitializeCharacters()
@@ -40,57 +57,68 @@ namespace GUIPracticeProgram
             charactersOnScreen = new List<NPC>();
             obstaclesOnScreen = new List<Obstacle>();
 
-            Sprite playerSprite = new Sprite(
-                global::GUIPracticeProgram.Properties.Resources.creepyplushtoy,
-                new Rectangle(new Point(0, 0), new Size(60, 60)));
-            Sprite obstacleSprite = new Sprite(
-               global::GUIPracticeProgram.Properties.Resources.tileTexture1,
-               new Rectangle(new Point(80, 80), new Size(60, 60)));
-
-            Sprite grass = new Sprite(
-               Color.GreenYellow,
-               new Rectangle(new Point(0, 0), new Size(panel1.Width, panel1.Height)));
-
-            new NonObstacle(grass, "grass");
+            new NonObstacle(sprites["grass"], "grass");
 
             player = (Character)Entity.CreateWithModifiedRect(
-                new Character(playerSprite, "player", 10), 
-                new Vector2(100,20), 
-                new Vector2(0,1)); //new Character(playerPicture, "player", 10);
+                new Character(sprites["playerSprite"], "player", 10),
+                new Vector2(100, 20),
+                new Vector2(0, 1));
 
-            obstaclesOnScreen.Add(/*new Obstacle(pictureBox1, "obstacle1")*/(Obstacle)Entity.CreateWithModifiedRect(
-                new Obstacle(obstacleSprite, "obstacle1"),
+            obstaclesOnScreen.Add((Obstacle)Entity.CreateWithModifiedRect(
+                new Obstacle(sprites["obstacle1"], "obstacle1"),
                 new Vector2(100, 50),
-                new Vector2(0,1)));
+                new Vector2(0, 1)));
 
-            Entity.DrawWithEntitiesOn(panel1);
+            Entity.DrawWithEntitiesOn(viewport);
         }
 
-        private void reactToTimer(object sender, EventArgs e)
+        private void StartGameLoop()
         {
-            System.Diagnostics.Debug.WriteLine("The Tick has happened!");
+            gameTimer = new Timer();
+            gameTimer.Interval = 10;
+            gameTimer.Start();
+            gameTimer.Tick += TimerUpdate;
+        }
+
+        private void TimerUpdate(object sender, EventArgs e)
+        {
+            UpdateObjects();
+            Draw();
+        }
+
+        private void UpdateObjects()
+        {
             foreach (var npc in charactersOnScreen)
             {
                 npc.Move();
             }
-
-            Draw();
         }
 
         private void Draw()
         {
-            panel1.Invalidate();
+            viewport.Invalidate();
         }
 
         private void UpdatePaint(object sender, PaintEventArgs e)
         {
+            PrepareViewport();
+            DrawViewport(e.Graphics);
+        }
+
+        private void PrepareViewport()
+        {
+            Entity.all.Sort();
+
             foreach (Entity entity in Entity.all)
             {
                 entity.DrawSprite(graphics);
             }
+        }
 
-            e.Graphics.Clear(Color.Black);
-            e.Graphics.DrawImage(screen, new Point(0,0));
+        private void DrawViewport(Graphics g)
+        {
+            g.Clear(Color.Black);
+            g.DrawImage(viewportImage, new Point(0, 0));
         }
 
         private void CheckInput(object sender, KeyEventArgs e)
@@ -101,11 +129,6 @@ namespace GUIPracticeProgram
             else if (e.KeyCode == Keys.S)   { player.Move(Character.DOWN); }
             else if (e.KeyCode == Keys.D)   { player.Move(Character.RIGHT); }
             else if (e.KeyCode == Keys.A)   { player.Move(Character.LEFT); }
-        }
-
-        private void playerPicture_Click(object sender, EventArgs e)
-        {
-            
         }
 
         private void Form1_Load(object sender, EventArgs e)

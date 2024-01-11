@@ -30,11 +30,9 @@ namespace GUIPracticeProgram
             LEFT = 3
         }
 
-        public Character(Sprite self, string name, int speed) : base(self, name)
+        public Character(Sprite self, string name, int speed, int layer = 0) : base(self, name, layer)
         {
-            this.self = self;
             this.speed = speed;
-            this.name = name;
         }
 
         /// <summary>

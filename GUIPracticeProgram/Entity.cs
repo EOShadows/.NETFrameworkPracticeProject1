@@ -10,24 +10,26 @@ using System.Windows.Forms;
 
 namespace GUIPracticeProgram
 {
-    public class Entity
+    public class Entity : IComparable<Entity>
     {
         public static List<Entity> all;
 
         public string name { get; set; }
         public Sprite self { get; set; }
-        public Image image;
-        protected Point lastLocation;
         protected Rect rect;
-        
-        public Entity(Sprite self, string name)
+
+        public int layer = 0;
+
+        public Entity(Sprite self, string name, int layer = 0)
         {
-            if (all == null) { all = new List<Entity>(); }
             this.self = self;
             this.name = name;
-            lastLocation = self.Location;
+            this.layer = layer;
+
             rect = new Rect(self.Right, self.Left, self.Top, self.Bottom);
-            self.LocationChanged += new EventHandler(OnLocationChanged);
+            self.LocationChanged += OnLocationChanged;
+
+            if (all == null) { all = new List<Entity>(); }
             all.Add(this);
         }
 
@@ -58,7 +60,7 @@ namespace GUIPracticeProgram
         {
             foreach (Entity obj in all)
             {
-                if (obj.name != name && obj.rect != null && obj.rect.Intersects(rect))
+                if (obj.name != name && obj.rect != null && obj.layer == layer && obj.rect.Intersects(rect))
                 {
                     return true;
                 }
@@ -91,7 +93,7 @@ namespace GUIPracticeProgram
         /// <returns></returns>
         public bool Intersects(Entity other)
         {
-            return (rect == null) ? false : other.rect.Intersects(rect);
+            return (rect == null || other.layer != layer) ? false : other.rect.Intersects(rect);
         }
 
         /// <summary>
@@ -107,16 +109,15 @@ namespace GUIPracticeProgram
             return (condition1 && condition2);
         }
 
-        private void OnLocationChanged(object obj, EventArgs e)
+        private void OnLocationChanged(object obj, SpriteLocationChangedArgs e)
         {
-            UpdateRect();
-            lastLocation = self.Location;
+            UpdateRect(e.before, e.after);
         }
 
-        private void UpdateRect()
+        private void UpdateRect(Point before, Point current)
         {
-            int x = self.Location.X - lastLocation.X;
-            int y = self.Location.Y - lastLocation.Y;
+            int x = current.X - before.X;
+            int y = current.Y - before.Y;
             rect += new Vector2(x, y);
         }
 
@@ -223,6 +224,31 @@ namespace GUIPracticeProgram
             {
                 entity.rect.Draw(e);
             }
+        }
+
+        public int CompareTo(Entity obj)
+        {
+            if (layer < obj.layer)
+            {
+                return -1;
+            }
+            else if (layer > obj.layer)
+            {
+                return 1;
+            }
+            else /* lh.layer == rh.layer */
+            {
+                if (rect.center.y < obj.rect.center.y)
+                {
+                    return -1;
+                }
+                else if (rect.center.y > obj.rect.center.y)
+                {
+                    return 1;
+                }
+            }
+
+            return 0;
         }
     }
 }

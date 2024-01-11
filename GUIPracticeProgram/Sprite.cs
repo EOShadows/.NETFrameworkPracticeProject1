@@ -73,7 +73,7 @@ namespace GUIPracticeProgram
             graphics.Flush();
         }
 
-        public event EventHandler LocationChanged;
+        public event EventHandler<SpriteLocationChangedArgs> LocationChanged;
     }
 
     public class SpriteLocationChangedArgs : EventArgs
