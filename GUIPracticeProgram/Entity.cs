@@ -13,20 +13,18 @@ namespace GUIPracticeProgram
     public class Entity
     {
         public static List<Entity> all;
-        private static Control drawnOn;
 
         public string name { get; set; }
-        public Control self { get; set; }
+        public Sprite self { get; set; }
         public Image image;
         protected Point lastLocation;
         protected Rect rect;
         
-        public Entity(Control self, string name, Image image)
+        public Entity(Sprite self, string name)
         {
             if (all == null) { all = new List<Entity>(); }
             this.self = self;
             this.name = name;
-            this.image = image;
             lastLocation = self.Location;
             rect = new Rect(self.Right, self.Left, self.Top, self.Bottom);
             self.LocationChanged += new EventHandler(OnLocationChanged);
@@ -60,7 +58,7 @@ namespace GUIPracticeProgram
         {
             foreach (Entity obj in all)
             {
-                if (obj.name != name && obj.rect.Intersects(rect))
+                if (obj.name != name && obj.rect != null && obj.rect.Intersects(rect))
                 {
                     return true;
                 }
@@ -93,7 +91,7 @@ namespace GUIPracticeProgram
         /// <returns></returns>
         public bool Intersects(Entity other)
         {
-            return other.rect.Intersects(rect);
+            return (rect == null) ? false : other.rect.Intersects(rect);
         }
 
         /// <summary>
@@ -198,6 +196,11 @@ namespace GUIPracticeProgram
             return entity;
         }
 
+        public void DrawSprite(Graphics graphics)
+        {
+            self.Draw(graphics);
+        }
+
         public void OnPaint(object obj, PaintEventArgs e)
         {
             if (GlobalSettings.GetDrawRect())
@@ -208,7 +211,6 @@ namespace GUIPracticeProgram
 
         public static void DrawWithEntitiesOn(Control form)
         {
-            drawnOn = form;
             form.Paint += new PaintEventHandler(DrawEntities);
         }
 

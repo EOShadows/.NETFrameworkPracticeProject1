@@ -18,7 +18,7 @@ namespace GUIPracticeProgram
     {
         private MoveDirection moveDirection;
 
-        public NPC(Control self, string name, int speed, Image image) : base(self, name, speed, image) { }
+        public NPC(Sprite self, string name, int speed) : base(self, name, speed) { }
 
         public void Move() { Move(moveDirection); }
     }
