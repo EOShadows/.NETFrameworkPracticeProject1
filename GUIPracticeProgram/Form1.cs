@@ -14,6 +14,8 @@ namespace GUIPracticeProgram
     {
         List<NPC> charactersOnScreen;
         List<Obstacle> obstaclesOnScreen;
+        Image screen;
+        Graphics graphics;
 
         Character player;
 
@@ -21,6 +23,9 @@ namespace GUIPracticeProgram
         {
             InitializeComponent();
             InitializeCharacters();
+
+            screen = new Bitmap(panel1.Width, panel1.Height);
+            graphics = Graphics.FromImage(screen);
 
             panel1.Paint += new PaintEventHandler(UpdatePaint);
 
@@ -81,8 +86,11 @@ namespace GUIPracticeProgram
         {
             foreach (Entity entity in Entity.all)
             {
-                entity.DrawSprite(e.Graphics);
+                entity.DrawSprite(graphics);
             }
+
+            e.Graphics.Clear(Color.Black);
+            e.Graphics.DrawImage(screen, new Point(0,0));
         }
 
         private void CheckInput(object sender, KeyEventArgs e)
