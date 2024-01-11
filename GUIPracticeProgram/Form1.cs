@@ -21,7 +21,7 @@ namespace GUIPracticeProgram
         {
             InitializeComponent();
             InitializeCharacters();
-
+            panel1.Paint += new PaintEventHandler(UpdatePaint);
 
             Timer myTimer = new Timer();
             myTimer.Interval = 1000;
@@ -35,14 +35,16 @@ namespace GUIPracticeProgram
             obstaclesOnScreen = new List<Obstacle>();
 
             player = (Character)Entity.CreateWithModifiedRect(
-                new Character(playerPicture, "player", 10), 
-                new Vector2(100,50), 
-                new Vector2(0,1));
+                new Character(playerPicture, "player", 10, global::GUIPracticeProgram.Properties.Resources.creepyplushtoy), 
+                new Vector2(100,20), 
+                new Vector2(0,1)); //new Character(playerPicture, "player", 10);
 
-            obstaclesOnScreen.Add(new Obstacle(pictureBox1, "obstacle1")/*(Obstacle)Entity.CreateWithModifiedRect(
-                new Obstacle(pictureBox1, "obstacle1"),
+            obstaclesOnScreen.Add(/*new Obstacle(pictureBox1, "obstacle1")*/(Obstacle)Entity.CreateWithModifiedRect(
+                new Obstacle(pictureBox1, "obstacle1", global::GUIPracticeProgram.Properties.Resources.tileTexture1),
                 new Vector2(100, 50),
-                new Vector2(0,1))*/);
+                new Vector2(0,1)));
+
+            Entity.DrawWithEntitiesOn(panel1);
         }
 
         private void reactToTimer(object sender, EventArgs e)
@@ -51,6 +53,14 @@ namespace GUIPracticeProgram
             foreach (var npc in charactersOnScreen)
             {
                 npc.Move();
+            }
+        }
+
+        private void UpdatePaint(object sender, PaintEventArgs e)
+        {
+            foreach (Entity entity in Entity.all)
+            {
+                e.Graphics.DrawImage(entity.image, entity.self.Location);
             }
         }
 
@@ -65,6 +75,11 @@ namespace GUIPracticeProgram
         }
 
         private void playerPicture_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
         {
 
         }

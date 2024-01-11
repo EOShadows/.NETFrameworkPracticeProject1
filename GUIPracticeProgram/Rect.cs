@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace GUIPracticeProgram
 {
@@ -46,13 +50,28 @@ namespace GUIPracticeProgram
             center = new Vector2(left + ((right - left) / 2), top + ((bottom - top) / 2));
         }
 
+        public int GetWidth()
+        {
+            return right - left;
+        }
+
+        public int GetHeight()
+        {
+            return bottom - top;
+        }
+
         public bool Intersects(Rect other)
         {
-            bool flagX1 = other.right > left && other.right < right;
-            bool flagX2 = other.left < right && other.left > left;
+            return Intersects(this, other) || Intersects(other, this);
+        }
 
-            bool flagY1 = other.top > top && other.top < bottom;
-            bool flagY2 = other.bottom < bottom && other.bottom > top;
+        private bool Intersects(Rect lh, Rect rh)
+        {
+            bool flagX1 = rh.right >= lh.left && rh.right <= lh.right;
+            bool flagX2 = rh.left <= lh.right && rh.left >= lh.left;
+
+            bool flagY1 = rh.top >= lh.top && rh.top <= lh.bottom;
+            bool flagY2 = rh.bottom <= lh.bottom && rh.bottom >= lh.top;
 
             return (flagX1 || flagX2) && (flagY1 || flagY2);
         }
@@ -60,6 +79,36 @@ namespace GUIPracticeProgram
         public static Rect operator+ (Rect lh, Vector2 rh)
         {
             return new Rect(lh.right + rh.x, lh.left + rh.x, lh.top + rh.y, lh.bottom + rh.y);
+        }
+
+        /// <summary>
+        /// Draw to the screen
+        /// </summary>
+        /// <param name="e"></param>
+        public void Draw(PaintEventArgs e)
+        {
+            if (!GlobalSettings.GetDrawRect())
+                return;
+
+            System.Diagnostics.Debug.WriteLine("Drawing rect now.");
+
+            Pen pen = new Pen(GlobalSettings.GetRectColor(), GlobalSettings.GetRectLineWidth());
+
+            var bottomRight =    new Point(upperLeft.x + GetWidth(), upperLeft.y + GetHeight());
+            var upperRight  =    new Point(upperLeft.x + GetWidth(), upperLeft.y);
+            var bottomLeft  =    new Point(upperLeft.x, upperLeft.y + GetHeight());
+
+            e.Graphics.DrawLine(pen, upperLeft.AsPoint(), upperRight); // Draw top line
+            e.Graphics.DrawLine(pen, upperRight, bottomRight); // Draw right line
+            e.Graphics.DrawLine(pen, upperLeft.AsPoint(), bottomLeft); // Draw top line
+            e.Graphics.DrawLine(pen, bottomRight, bottomLeft); // Draw top line
+
+            pen.Dispose();
+        }
+
+        public override string ToString()
+        {
+            return "Rect() top=" + top + " bottom=" + bottom + " right=" + right + " left=" + left;
         }
     }
 }

@@ -30,7 +30,7 @@ namespace GUIPracticeProgram
             LEFT = 3
         }
 
-        public Character(Control self, string name, int speed) : base(self, name)
+        public Character(Control self, string name, int speed, Image image) : base(self, name, image)
         {
             this.self = self;
             this.speed = speed;

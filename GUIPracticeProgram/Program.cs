@@ -8,8 +8,6 @@ namespace GUIPracticeProgram
 {
     static class Program
     {
-        private static bool running = true;
-
         /// <summary>
         /// The main entry point for the application.
         /// </summary>

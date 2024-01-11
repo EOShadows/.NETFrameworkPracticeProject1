@@ -12,18 +12,22 @@ namespace GUIPracticeProgram
 {
     public class Entity
     {
-        protected static List<Entity> all;
+        public static List<Entity> all;
+        private static Control drawnOn;
 
         public string name { get; set; }
         public Control self { get; set; }
+        public Image image;
+        protected Point lastLocation;
         protected Rect rect;
         
-        public Entity(Control self, string name)
+        public Entity(Control self, string name, Image image)
         {
-            all = new List<Entity>();
-
+            if (all == null) { all = new List<Entity>(); }
             this.self = self;
             this.name = name;
+            this.image = image;
+            lastLocation = self.Location;
             rect = new Rect(self.Right, self.Left, self.Top, self.Bottom);
             self.LocationChanged += new EventHandler(OnLocationChanged);
             all.Add(this);
@@ -108,16 +112,14 @@ namespace GUIPracticeProgram
         private void OnLocationChanged(object obj, EventArgs e)
         {
             UpdateRect();
+            lastLocation = self.Location;
         }
 
         private void UpdateRect()
         {
-            Rect oldRect = rect;
-            int x = self.Location.X - oldRect.upperLeft.x;
-            int y = self.Location.Y - oldRect.upperLeft.y;
-
-
-            rect = new Rect(oldRect.right + x, oldRect.left + x, oldRect.top + y, oldRect.bottom + y);
+            int x = self.Location.X - lastLocation.X;
+            int y = self.Location.Y - lastLocation.Y;
+            rect += new Vector2(x, y);
         }
 
         /// <summary>
@@ -165,8 +167,8 @@ namespace GUIPracticeProgram
             int newTop = entity.rect.top;
             int newBottom = entity.rect.bottom;
 
-            int percX = (int)((entity.rect.right - entity.rect.left) * (percChange.x / 100));
-            int percY = (int)((entity.rect.bottom - entity.rect.top) * (percChange.y / 100));
+            int percX = (int)((float)entity.rect.GetWidth() * ((float)percChange.x / (float)100));
+            int percY = (int)((float)entity.rect.GetHeight() * ((float)percChange.y / (float)100));
 
             if (changeFrom.x == 0 && percChange.x != 100)
             {
@@ -194,6 +196,31 @@ namespace GUIPracticeProgram
             entity.rect = newRect;        
             
             return entity;
+        }
+
+        public void OnPaint(object obj, PaintEventArgs e)
+        {
+            if (GlobalSettings.GetDrawRect())
+            {
+                rect.Draw(e);
+            }
+        }
+
+        public static void DrawWithEntitiesOn(Control form)
+        {
+            drawnOn = form;
+            form.Paint += new PaintEventHandler(DrawEntities);
+        }
+
+        public static void DrawEntities(object obj, PaintEventArgs e)
+        {
+            if (!GlobalSettings.GetDrawRect())
+                return;
+
+            foreach (var entity in all)
+            {
+                entity.rect.Draw(e);
+            }
         }
     }
 }

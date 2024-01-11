@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace GUIPracticeProgram
 {
@@ -100,6 +101,16 @@ namespace GUIPracticeProgram
         public int Dot(Vector2 rh)
         {
             return (x * rh.x) + (y * rh.y);
+        }
+
+        public Point AsPoint()
+        {
+            return new Point(x, y);
+        }
+
+        public override string ToString()
+        {
+            return "(x=" + x + ", y=" + y + ")";
         }
     }
 }
