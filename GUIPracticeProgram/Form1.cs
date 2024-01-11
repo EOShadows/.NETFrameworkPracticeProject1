@@ -13,12 +13,9 @@ namespace GUIPracticeProgram
     public partial class Form1 : Form
     {
         List<NPC> charactersOnScreen;
+        List<Obstacle> obstaclesOnScreen;
 
         Character player;
-        const Character.MoveDirection UP = Character.MoveDirection.UP;
-        const Character.MoveDirection DOWN = Character.MoveDirection.DOWN;
-        const Character.MoveDirection RIGHT = Character.MoveDirection.RIGHT;
-        const Character.MoveDirection LEFT = Character.MoveDirection.LEFT;
 
         public Form1()
         {
@@ -35,16 +32,17 @@ namespace GUIPracticeProgram
         private void InitializeCharacters()
         {
             charactersOnScreen = new List<NPC>();
-            player = new Character(playerPicture, "player", 10);
-        }
+            obstaclesOnScreen = new List<Obstacle>();
 
+            player = (Character)Entity.CreateWithModifiedRect(
+                new Character(playerPicture, "player", 10), 
+                new Vector2(100,50), 
+                new Vector2(0,1));
 
-        private void MyUpdate()
-        {
-            Timer myTimer = new Timer();
-            myTimer.Interval = 1000;
-            myTimer.Start();
-            myTimer.Tick += reactToTimer;
+            obstaclesOnScreen.Add(new Obstacle(pictureBox1, "obstacle1")/*(Obstacle)Entity.CreateWithModifiedRect(
+                new Obstacle(pictureBox1, "obstacle1"),
+                new Vector2(100, 50),
+                new Vector2(0,1))*/);
         }
 
         private void reactToTimer(object sender, EventArgs e)
@@ -60,109 +58,15 @@ namespace GUIPracticeProgram
         {
             System.Diagnostics.Debug.WriteLine("Key down: " + e.KeyCode.ToString());
 
-            if (e.KeyCode == Keys.W)        { player.Move(UP); }
-            else if (e.KeyCode == Keys.S)   { player.Move(DOWN); }
-            else if (e.KeyCode == Keys.D)   { player.Move(RIGHT); }
-            else if (e.KeyCode == Keys.A)   { player.Move(LEFT); }
+            if (e.KeyCode == Keys.W)        { player.Move(Character.UP); }
+            else if (e.KeyCode == Keys.S)   { player.Move(Character.DOWN); }
+            else if (e.KeyCode == Keys.D)   { player.Move(Character.RIGHT); }
+            else if (e.KeyCode == Keys.A)   { player.Move(Character.LEFT); }
         }
 
         private void playerPicture_Click(object sender, EventArgs e)
         {
 
         }
-    }
-
-    public static class ExtensionMethods
-    {
-        public static Point Plus(this Point point, Point otherPoint)
-        {
-            int x = point.X + otherPoint.X;
-            int y = point.Y + otherPoint.Y;
-
-            return new Point(x, y);
-        }
-    }
-
-    public class Entity
-    {
-        public static List<Entity> entity;
-
-        public string name { get; set; }
-        public Control self { get; set; }
-
-        public Entity(Control self, string name)
-        {
-            entity = new List<Entity>();
-
-            this.self = self;
-            this.name = name;
-
-            entity.Add(this);
-        }
-
-        public bool Intersects(Point point)
-        {
-            bool condition1 = point.X >= self.Left && point.X <= self.Right;
-            bool condition2 = point.Y <= self.Bottom && point.Y >= self.Top;
-
-            return (condition1 && condition2);
-        }
-    }
-
-    public class Character : Entity
-    {
-        public int speed { get; set; }
-
-        public enum MoveDirection
-        {
-            UP = 0,
-            DOWN = 1,
-            RIGHT = 2,
-            LEFT = 3
-        }
-
-        public Character(Control self, string name, int speed) : base (self, name)
-        {
-            this.self = self;
-            this.speed = speed;
-            this.name = name;
-        }
-
-        public void Move(MoveDirection direction)
-        {
-            Point movement = new Point(0, 0);
-
-            switch (direction)
-            {
-                case MoveDirection.UP:
-                    movement = new Point(0, -speed);
-                    break;
-                case MoveDirection.DOWN:
-                    movement = new Point(0, speed);
-                    break;
-                case MoveDirection.RIGHT:
-                    movement = new Point(speed, 0);
-                    break;
-                case MoveDirection.LEFT:
-                    movement = new Point(-speed, 0);
-                    break;
-            }
-
-            self.Location = self.Location.Plus(movement);
-        }
-    }
-
-    public class NPC : Character
-    {
-        private MoveDirection moveDirection;
-
-        public NPC(Control self, string name, int speed) : base(self, name, speed) { }
-
-        public void Move() { Move(moveDirection); }
-    }
-
-    public class Obstacle : Entity
-    {
-        public Obstacle(Control self, string name) : base (self, name) { }
     }
 }
