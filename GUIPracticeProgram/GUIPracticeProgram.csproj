@@ -55,10 +55,12 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="GameGraphics.cs" />
+    <Compile Include="GameObjects.cs" />
     <Compile Include="GlobalSettings.cs" />
     <Compile Include="NonObstacle.cs" />
     <Compile Include="NPC.cs" />
     <Compile Include="Obstacle.cs" />
+    <Compile Include="PlayerManagement.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rect.cs" />

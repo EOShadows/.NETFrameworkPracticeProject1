@@ -49,8 +49,7 @@ namespace GUIPracticeProgram
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.KeyPreview = true;
             this.Name = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CheckInput);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(PlayerManagement.CheckInput);
             ((System.ComponentModel.ISupportInitialize)(this.viewport)).EndInit();
             this.ResumeLayout(false);
 

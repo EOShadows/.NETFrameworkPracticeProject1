@@ -10,25 +10,24 @@ using System.Windows.Forms;
 
 namespace GUIPracticeProgram
 {
+    /// <summary>
+    /// A collection of constant properties to control behaviour throughout
+    /// the code.
+    /// </summary>
     public class GlobalSettings
     {
-        private static bool DRAW_RECT = false;
-        private static Color RECT_COLOR = Color.Red;
-        private static int RECT_LINE_WIDTH = 8;
+        // DEBUGGING ////////////////////////////////////////////////
 
-        public static bool GetDrawRect()
-        {
-            return DRAW_RECT;
-        }
+        /* RECTANGLE DRAWING ------------------------------------- */
+        public static bool DRAW_RECT        { get => false; }
+        public static Color RECT_COLOR      { get => Color.Red; }
+        public static int RECT_LINE_WIDTH   { get => 2; }
+        /* ------------------------------------------------------- */
 
-        public static Color GetRectColor()
-        {
-            return RECT_COLOR;
-        }
+        /* DEBUG CONSOLE MESSAGES -------------------------------- */
+        public static bool WRITE_INPUT      { get => false; }
+        /* ------------------------------------------------------- */
 
-        public static int GetRectLineWidth()
-        {
-            return RECT_LINE_WIDTH;
-        }
+        /////////////////////////////////////////////////////////////
     }
 }

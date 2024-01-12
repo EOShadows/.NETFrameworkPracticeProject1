@@ -187,10 +187,6 @@ namespace GUIPracticeProgram
                 newTop = entity.rect.bottom - percY;
             }
 
-            System.Diagnostics.Debug.WriteLine(entity.rect.right + "/" + newRight + " " + 
-                entity.rect.left + "/" + newLeft + " " + 
-                entity.rect.top + "/" + newTop + " " +
-                entity.rect.bottom + "/" + newBottom);
             Rect newRect = new Rect(newRight, newLeft, newTop, newBottom);
             entity.rect = newRect;        
             
@@ -204,7 +200,7 @@ namespace GUIPracticeProgram
 
         public void OnPaint(object obj, PaintEventArgs e)
         {
-            if (GlobalSettings.GetDrawRect())
+            if (GlobalSettings.DRAW_RECT)
             {
                 rect.Draw(e);
             }
@@ -217,7 +213,7 @@ namespace GUIPracticeProgram
 
         public static void DrawEntities(object obj, PaintEventArgs e)
         {
-            if (!GlobalSettings.GetDrawRect())
+            if (!GlobalSettings.DRAW_RECT)
                 return;
 
             foreach (var entity in all)

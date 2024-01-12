@@ -87,12 +87,12 @@ namespace GUIPracticeProgram
         /// <param name="e"></param>
         public void Draw(PaintEventArgs e)
         {
-            if (!GlobalSettings.GetDrawRect())
+            if (!GlobalSettings.DRAW_RECT)
                 return;
 
             System.Diagnostics.Debug.WriteLine("Drawing rect now.");
 
-            Pen pen = new Pen(GlobalSettings.GetRectColor(), GlobalSettings.GetRectLineWidth());
+            Pen pen = new Pen(GlobalSettings.RECT_COLOR, GlobalSettings.RECT_LINE_WIDTH);
 
             var bottomRight =    new Point(upperLeft.x + GetWidth(), upperLeft.y + GetHeight());
             var upperRight  =    new Point(upperLeft.x + GetWidth(), upperLeft.y);
