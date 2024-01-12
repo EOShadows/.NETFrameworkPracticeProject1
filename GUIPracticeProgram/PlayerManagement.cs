@@ -23,10 +23,10 @@ namespace GUIPracticeProgram
             if (GlobalSettings.WRITE_INPUT)
                 System.Diagnostics.Debug.WriteLine("Key down: " + e.KeyCode.ToString());
 
-            if (e.KeyCode == Keys.W) { player.Move(Character.UP); }
-            else if (e.KeyCode == Keys.S) { player.Move(Character.DOWN); }
-            else if (e.KeyCode == Keys.D) { player.Move(Character.RIGHT); }
-            else if (e.KeyCode == Keys.A) { player.Move(Character.LEFT); }
+            if (e.KeyCode == Keys.W)        { player.Move(Character.UP); }
+            else if (e.KeyCode == Keys.S)   { player.Move(Character.DOWN); }
+            else if (e.KeyCode == Keys.D)   { player.Move(Character.RIGHT); }
+            else if (e.KeyCode == Keys.A)   { player.Move(Character.LEFT); }
         }
     }
 }

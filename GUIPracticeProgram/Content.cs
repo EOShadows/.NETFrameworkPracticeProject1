@@ -22,6 +22,9 @@ namespace GUIPracticeProgram
             sprites.Add("obstacle1", new Sprite(
                global::GUIPracticeProgram.Properties.Resources.tileTexture1,
                new Rectangle(new Point(80, 80), new Size(60, 60))));
+            sprites.Add("obstacle2", new Sprite(
+               global::GUIPracticeProgram.Properties.Resources.tileTexture1,
+               new Rectangle(new Point(200, 200), new Size(60, 60))));
             sprites.Add("grass", new Sprite(
                Color.GreenYellow,
                new Rectangle(new Point(0, 0), new Size(viewport.Width, viewport.Height))));

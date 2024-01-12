@@ -28,13 +28,22 @@ namespace GUIPracticeProgram
 
             new NonObstacle(sprites["grass"], "grass");
 
-            PlayerManagement.SetPlayer((Character)Entity.CreateWithModifiedRect(
-                new Character(sprites["playerSprite"], "player", 10),
-                new Vector2(100, 20),
-                new Vector2(0, 1)));
+            PlayerManagement.SetPlayer(
+                (Character)Entity.CreateWithModifiedRect(
+                    Entity.CreateWithModifiedRect(
+                        new Character(sprites["playerSprite"], "player", 10),
+                        new Vector2(75, 20),
+                        new Vector2(0, 1)),
+                    new Vector2(65, 100),
+                    new Vector2(1, 0)));
 
             obstaclesOnScreen.Add((Obstacle)Entity.CreateWithModifiedRect(
                 new Obstacle(sprites["obstacle1"], "obstacle1"),
+                new Vector2(100, 50),
+                new Vector2(0, 1)));
+
+            obstaclesOnScreen.Add((Obstacle)Entity.CreateWithModifiedRect(
+                new Obstacle(sprites["obstacle2"], "obstacle2"),
                 new Vector2(100, 50),
                 new Vector2(0, 1)));
         }
