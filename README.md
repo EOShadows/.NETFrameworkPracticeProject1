@@ -17,3 +17,21 @@
 
 https://github.com/EOShadows/GUIProgramPractice/assets/82051175/3e863be1-bd80-4cd8-a3ad-15a154a51f57
 
+#### Additionally, how organized and clean I was able to write all of the code while still maintaining the functionality.
+It starts with the class that runs the whole game, in the Form1.cs file.
+It's main responsability is kept to running the game loop.  It initializes instances of the classes that have the responsabilities
+of the performing the details, then makes calls to update game objects and draw the graphics, which are differed to the classes
+whose responsabilties are to do those things.
+
+https://github.com/EOShadows/GUIProgramPractice/blob/6eb00bf094ccb7fcdc8f1b3cd92db65637969a9b/GUIPracticeProgram/Form1.cs#L1-L91
+
+The most important classes for these things are the 
+- Content class
+https://github.com/EOShadows/GUIProgramPractice/blob/6eb00bf094ccb7fcdc8f1b3cd92db65637969a9b/GUIPracticeProgram/Content.cs#L1-L38
+- Graphics class
+https://github.com/EOShadows/GUIProgramPractice/blob/6eb00bf094ccb7fcdc8f1b3cd92db65637969a9b/GUIPracticeProgram/GameGraphics.cs#L1-L76
+- Game objects class
+https://github.com/EOShadows/GUIProgramPractice/blob/6eb00bf094ccb7fcdc8f1b3cd92db65637969a9b/GUIPracticeProgram/GameObjects.cs#L1-L59
+- and the PlayerManagement
+https://github.com/EOShadows/GUIProgramPractice/blob/6eb00bf094ccb7fcdc8f1b3cd92db65637969a9b/GUIPracticeProgram/PlayerManagement.cs#L1-L32
+I am proud of all of the code I wrote in this short project, but as a lot of it is much larger, rather than putting them here, they can just be viewed by looking in the [source code itself](GUIPracticeProgram).
