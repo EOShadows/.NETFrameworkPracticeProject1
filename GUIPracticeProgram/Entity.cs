@@ -198,14 +198,11 @@ namespace GUIPracticeProgram
             self.Draw(graphics);
         }
 
-        public void OnPaint(object obj, PaintEventArgs e)
-        {
-            if (GlobalSettings.DRAW_RECT)
-            {
-                rect.Draw(e);
-            }
-        }
 
+        /// <summary>
+        /// Draw the rects of the entities
+        /// </summary>
+        /// <param name="form"></param>
         public static void DrawWithEntitiesOn(Control form)
         {
             form.Paint += new PaintEventHandler(DrawEntities);

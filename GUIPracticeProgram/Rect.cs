@@ -90,8 +90,6 @@ namespace GUIPracticeProgram
             if (!GlobalSettings.DRAW_RECT)
                 return;
 
-            System.Diagnostics.Debug.WriteLine("Drawing rect now.");
-
             Pen pen = new Pen(GlobalSettings.RECT_COLOR, GlobalSettings.RECT_LINE_WIDTH);
 
             var bottomRight =    new Point(upperLeft.x + GetWidth(), upperLeft.y + GetHeight());
