@@ -1,4 +1,4 @@
-# C# .NET Framework WinForms Project
+# C# .NET Framework WinForms Practice Project
 ## Initial video game code written from scratch using the system's graphics class.
 
 #### Description of work
