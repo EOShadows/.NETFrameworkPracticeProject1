@@ -8,7 +8,7 @@
   grew into removing a lot of the template code and turning the windows form into the beginning of a game.
 - Back in highschool this was something I really wanted to do but couldn't figure out how using this very framework.
   I eventually started using the XNA framework instead, then Monogame, then Unity.  This time I was easily able
-  to accomplish what I did here, demonstrating to myself how far a long I have come since then.
+  to accomplish what I did here, demonstrating to myself how far along I have come since then.
 
 #### One of the features of this code that I am proud of is how easy it is to add an obstacle to the game.
 - All it takes is adding two statements.
