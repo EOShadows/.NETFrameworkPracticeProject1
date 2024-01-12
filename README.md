@@ -14,3 +14,6 @@
 - All it takes is adding two statements.
   - One to the Content class to add the Sprite to the Sprite dictionary, then
   - One to the GameObject class to add an Entity object using the new Sprite.
+
+https://github.com/EOShadows/GUIProgramPractice/assets/82051175/3e863be1-bd80-4cd8-a3ad-15a154a51f57
+
